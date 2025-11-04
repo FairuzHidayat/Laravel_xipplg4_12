@@ -30,6 +30,7 @@
           <!-- DIPERBAIKI: tambahkan prefix admin. -->
           <a href="{{ route('admin.students.edit', $student->id) }}" class="btn btn-warning btn-sm">Edit</a>
           <form action="{{ route('admin.students.destroy', $student->id) }}" method="POST" class="d-inline">
+            
             @csrf
             @method('DELETE')
             <button class="btn btn-danger btn-sm">Hapus</button>

@@ -29,19 +29,18 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'nis' => 'required|unique:students,nis',
-            'Fairuz Hidayat' => 'required',
-            'Jenis Kelamin' => 'required',
-            'nisn' => 'required|unique:students,nisn',
-        ]);
+{
+    $request->validate([
+        'nis' => 'required|unique:students',
+        'nama_lengkap' => 'required',
+        'jenis_kelamin' => 'required',
+        'nisn' => 'required|unique:students',
+    ]);
 
-        Student::create($request->all());
-        return redirect()->route('admin.students.index')
-                         ->with('success', 'Data berhasil disimpan.');
-    }
+    Student::create($request->all());
 
+    return redirect()->route('admin.students.index')->with('success', 'Data berhasil disimpan!');
+}
     /**
      * Display the specified resource.
      */
@@ -53,17 +52,26 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Student $students)
     {
-        //
+        return view ('admin.students.edit' , compact('students')) ;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+   public function update(Request $request, Student $student)
     {
-        //
+        $validated = $request->validate([
+        'nis' => 'required',
+        'nama_lengkap' => 'required',
+        'jenis_kelamin' => 'required',
+        'nisn' => 'required',
+    ]);
+ 
+    $student->update($validated);
+    return redirect()->route('admin.students.index')->with('success', 'Data siswa berhasil diperbarui!');
+
     }
 
     /**
